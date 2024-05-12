@@ -1,0 +1,8 @@
+alias dnsme="sudo brew services restart dnscrypt-proxy"
+# alias git-clone="git clone git@github.com:paepckehh/$REPO.git"
+alias git-push="git add . && git commit -S && git push"
+alias git-log="git log --show-signature"
+alias l="ls -la"
+alias e="vim"
+export PATH=~/bin:$PATH
+eval $(ssh-agent)
