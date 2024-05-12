@@ -61,6 +61,7 @@ module_setup_dotenv() {
 	mv -f .vimrc .zshrc .zshrc.pre-oh-my-zsh ".attic/$dts/"
 	# ln -fs .dotenv/vimrc .vimrc
 	ln -fs .dotenv/zshrc .zshrc
+	ln -fs .dotenv/gitconfig .gitconfig
 	echo '[end][module:setup_dotenv]'
 }
 
