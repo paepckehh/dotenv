@@ -1,35 +1,62 @@
 #!/bin/sh
+# setup my personal favorite unix env @macos @linux @freebsd @openbsd
 
 # config
+gui='true'
 github_user='paepckehh'
-pkg_cli='openssh curl tmux vim neovim git gh zsh htop go tldr ripgrep fzf'
+pkg_cli='openssh curl tmux vim neovim git gh zsh htop go tldr ripgrep fzf rsync'
 pkg_cli_linux=''
 pkg_cli_darwin=''
 pkg_cli_freebsd=''
+pkg_cli_openbsd=''
 pkg_gui='firefox libreoffice virtualbox'
 pkg_gui_linux=''
 pkg_gui_darwin='lulu istat-menus keka opencore-patcher docker'
 pkg_gui_freebsd=''
+pkg_gui_openbsd=''
 
 
 # global
 os=$( uname )
 dts=$( date -u +%Y-%m-%dT%H:%M:%SZ )
 
-module_setupenv() {
-	echo "[start][module:setupenv]"
-	sh -c $( curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh )
+brew_install() {
+	if [ "$blist" != "" ]; then 
+		XCMD="brew install $bopt $blist" && echo $XCMD
+	fi
+}
+
+module_setup_gh() {
+	echo '[start][module:setup_gh]'
+	echo 'press control-c to skip'
+	gh auth login
+	gh auth setup-git
+	echo '[end][module:setup_gh]'
+}
+
+module_setup_ohmyzsh() {
+	echo '[start][module:setup_ohmyzsh]'
 	cd || exit 1
-	git clone git@github.com:$github_user/dotenv .dotenv
+	sh -c $( curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh )
+	echo '[end][module:setup_ohmyzsh]'
+}
+
+module_setup_dotenv() {
+	echo '[start][module:setup_dotenv]'
+	cd || exit 1
+	if [ -x .dotenv/.git ]; then 
+		(cd .dotenv && git pull)
+	else 
+		(cd && git clone git@github.com:$github_user/dotenv .dotenv)
+	fi
+	cd || exit 1
 	mkdir -p .attic/$dts 
 	touch .vimrc .zshrc .zshrc.pre-oh-my-zsh 
 	mv -f .vimrc .zshrc .zshrc.pre-oh-my-zsh .attic/$dts/ 
 	ln -fs .dotenv/vimrc .vimrc
 	ln -fs .dotenv/zshrc .zshrc
 	ln -fs .dotenv/zshrc.pre-oh-my-zsh .zshrc.pre-oh-my-zsh
-	gh auth login
-	gh auth setup-git
-	echo "[end][module:setupenv]"
+	echo '[end][module:setup_dotenv]'
 }
 
 module_brew() {
@@ -39,34 +66,62 @@ module_brew() {
 		sh -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
 	fi
 	brew upgrade
-	brew install $pkg_cli
-	brew install --cask $pkg_gui
+	bopt='' blist=$pkg_cli brew_install
+	if [ "$gui" = "true" ]; then 
+ 		bopt='--cask' blist=$pkg_gui brew_install
+	fi
 	case $os in
 		Linux) 
-			brew install $pkg_cli_linux
-			brew install $pkg_gui_linux
+			bopt='' blist=$pkg_cli_linux brew_install
+			if [ "$gui" = "true" ]; then 
+				bopt='--cask' blist=$pkg_gui_linux brew_install
+			fi
 			;;
 		Darwin) 
-			brew install $pkg_cli_darwin
-			brew install $pkg_gui_darwin
+			bopt='' blist=$pkg_cli_darwin brew_install
+			if [ "$gui" = "true" ]; then 
+				bopt='--cask' blist=$pkg_gui_darwin brew_install
+			fi
 			;;
 
 	esac
 	echo "[end][module:brew]"
 }
 
+module_pkg() {
+	case $os in 
+		FreeBSD)
+			sudo pkg install $pkg_cli $pkg_cli_freebsd 
+			if [ "$gui" = "true" ]; then 
+				sudo pkg install $pkg_gui $pkg_gui_freebsd
+			fi
+			;;
+		OpenBSD)
+			if [ "$gui" = "true" ]; then 
+				sudo pkg_add $pkg_gui $pkg_gui_openbsd
+			fi
+	esac
+}
+
+module_setup() {
+	module_setup_dotenv
+	module_setup_ohmyzsh
+	module_setup_gh
+}
+
 linux() {
 	module_brew
-	module_setupenv
+	module_setup
 }
 
 darwin() {
 	module_brew
-	module_setupenv
+	module_setup
 }
 
 freebsd() {
-	echo '...pending!'
+	module_pkg
+	module_setup
 }
 
 init() {
