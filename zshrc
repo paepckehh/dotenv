@@ -9,7 +9,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -71,9 +70,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew)
+# plugins=(git brew)
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -100,4 +99,17 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# setup 
+ZSH_THEME="agnoster"
+plugins=(git brew)
+source $ZSH/oh-my-zsh.sh
+alias dnsme="sudo brew services restart dnscrypt-proxy"
+alias git-clone="git clone git@github.com:paepckehh/$REPO.git"
+alias git-push="git add . && git commit -S && git push"
+alias git-log="git log --show-signature"
+alias l="ls -la"
+alias e="vim"
+eval $(ssh-agent)
+export SHELLCHECK_OPTS="-e SC2086"
 export PATH="/usr/local/bin:/usr/bin:/bin::/usr/local/sbin:/usr/sbin:/sbin:"
