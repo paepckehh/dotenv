@@ -1,7 +1,16 @@
 #!/bin/sh
 
 # config
-github_user="paepckehh"
+github_user='paepckehh'
+pkg_cli='openssh curl tmux vim neovim git gh zsh htop go tldr ripgrep fzf'
+pkg_cli_linux=''
+pkg_cli_darwin=''
+pkg_cli_freebsd=''
+pkg_gui='firefox libreoffice virtualbox'
+pkg_gui_linux=''
+pkg_gui_darwin='lulu istat-menus keka opencore-patcher docker'
+pkg_gui_freebsd=''
+
 
 # global
 os=$( uname )
@@ -30,18 +39,28 @@ module_brew() {
 		sh -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
 	fi
 	brew upgrade
-	brew install openssh curl tmux vim neovim git gh zsh htop go tldr ripgrep fzf
-	brew install --cask lulu istat-menus keka firefox libreoffice opencore-patcher virtualbox docker
-	setup
+	brew install $pkg_cli
+	brew install --cask $pkg_gui
+	case $os in
+		Linux) 
+			brew install $pkg_cli_linux
+			brew install $pkg_gui_linux
+			;;
+		Darwin) 
+			brew install $pkg_cli_darwin
+			brew install $pkg_gui_darwin
+			;;
+
+	esac
 	echo "[end][module:brew]"
 }
 
-darwin() {
+linux() {
 	module_brew
 	module_setupenv
 }
 
-linux() {
+darwin() {
 	module_brew
 	module_setupenv
 }
@@ -53,8 +72,8 @@ freebsd() {
 init() {
 	echo "[start][$os]"
 	case $os in
-		Darwin) darwin;;
 		Linux) linux;;
+		Darwin) darwin;;
 		FreeBSD) freebsd;;
 		*) echo "unable to recognise os" && exit 1;;
 	esac
