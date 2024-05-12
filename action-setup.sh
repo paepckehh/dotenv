@@ -59,9 +59,14 @@ module_setup_dotenv() {
 	mkdir -p ".attic/$dts"
 	touch .vimrc .zshrc .zshrc.pre-oh-my-zsh 
 	mv -f .vimrc .zshrc .zshrc.pre-oh-my-zsh ".attic/$dts/"
+	mkdir -p .ssh
 	# ln -fs .dotenv/vimrc .vimrc
 	ln -fs .dotenv/zshrc .zshrc
 	ln -fs .dotenv/gitconfig .gitconfig
+	ln -fs .dotenv/ssh/config .ssh/config
+	ln -fs .dotenv/ssh/known_hosts .ssh/known_hosts
+	ln -fs .dotenv/ssh/id_ed25519.pub .ssh/id_ed25519.pub 
+	ln -fs .dotenv/ssh/allowed_signers .ssh/allowed_signers
 	echo '[end][module:setup_dotenv]'
 }
 
