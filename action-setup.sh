@@ -1,5 +1,5 @@
 #!/bin/sh
-# quick setup|restore|backup my personal favorite unix env @macos @linux @freebsd @openbsd
+# quick setup|restore|verify|backup my personal favorite unix env @macos @linux @freebsd @openbsd
 
 # config
 gui='true'
@@ -65,10 +65,10 @@ module_setup_dotenv() {
 	ln -fs .dotenv/gitconfig .gitconfig
 	mkdir -p .ssh || exit 1 
 	cd .ssh || exit 1
-	ln -fs ../.dotenv/ssh/config .ssh/config
-	ln -fs ../.dotenv/ssh/known_hosts .ssh/known_hosts
-	ln -fs ../.dotenv/ssh/id_ed25519.pub .ssh/id_ed25519.pub 
-	ln -fs ../.dotenv/ssh/allowed_signers .ssh/allowed_signers
+	ln -fs ../.dotenv/ssh/config config
+	ln -fs ../.dotenv/ssh/known_hosts known_hosts
+	ln -fs ../.dotenv/ssh/id_ed25519.pub id_ed25519.pub 
+	ln -fs ../.dotenv/ssh/allowed_signers allowed_signers
 	cd || exit 1
 	echo '[end][module:setup_dotenv]'
 }
