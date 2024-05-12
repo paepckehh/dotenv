@@ -1,5 +1,5 @@
 #!/bin/sh
-# setup my personal favorite unix env @macos @linux @freebsd @openbsd
+# quick setup|restore|backup my personal favorite unix env @macos @linux @freebsd @openbsd
 
 # config
 gui='true'
