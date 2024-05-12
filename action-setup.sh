@@ -4,7 +4,7 @@
 # config
 gui='true'
 github_user='paepckehh'
-pkg_cli='openssh curl tmux vim neovim git gh zsh htop go tldr ripgrep fzf rsync'
+pkg_cli='openssh curl tmux zsh vim neovim git gh shellcheck go tldr ripgrep fzf rsync htop'
 pkg_cli_linux=''
 pkg_cli_darwin=''
 pkg_cli_freebsd=''
@@ -19,10 +19,16 @@ pkg_gui_openbsd=''
 # global
 os=$( uname )
 dts=$( date -u +%Y-%m-%dT%H:%M:%SZ )
+bgui=''
+blist=''
 
 brew_install() {
 	if [ "$blist" != "" ]; then 
-		XCMD="brew install $bopt $blist" && echo $XCMD
+		if [ "$bgui" = "true" ]; then
+			brew install --cask $blist
+		else 
+			brew install $blist
+		fi
 	fi
 }
 
@@ -37,7 +43,7 @@ module_setup_gh() {
 module_setup_ohmyzsh() {
 	echo '[start][module:setup_ohmyzsh]'
 	cd || exit 1
-	sh -c $( curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh )
+	sh -c "$( curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh )"
 	echo '[end][module:setup_ohmyzsh]'
 }
 
@@ -50,10 +56,10 @@ module_setup_dotenv() {
 		(cd && git clone git@github.com:$github_user/dotenv .dotenv)
 	fi
 	cd || exit 1
-	mkdir -p .attic/$dts 
+	mkdir -p ".attic/$dts"
 	touch .vimrc .zshrc .zshrc.pre-oh-my-zsh 
-	mv -f .vimrc .zshrc .zshrc.pre-oh-my-zsh .attic/$dts/ 
-	ln -fs .dotenv/vimrc .vimrc
+	mv -f .vimrc .zshrc .zshrc.pre-oh-my-zsh ".attic/$dts/"
+	# ln -fs .dotenv/vimrc .vimrc
 	ln -fs .dotenv/zshrc .zshrc
 	ln -fs .dotenv/zshrc.pre-oh-my-zsh .zshrc.pre-oh-my-zsh
 	echo '[end][module:setup_dotenv]'
@@ -61,26 +67,25 @@ module_setup_dotenv() {
 
 module_brew() {
 	echo "[start][module:brew]"
-	brew info 
-	if [ $? != 0 ]; then 
-		sh -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+	if [ ! "$(brew info)" ]; then 
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
 	brew upgrade
 	bopt='' blist=$pkg_cli brew_install
 	if [ "$gui" = "true" ]; then 
- 		bopt='--cask' blist=$pkg_gui brew_install
+ 		bgui='' blist=$pkg_gui brew_install
 	fi
 	case $os in
 		Linux) 
 			bopt='' blist=$pkg_cli_linux brew_install
 			if [ "$gui" = "true" ]; then 
-				bopt='--cask' blist=$pkg_gui_linux brew_install
+				bgui='true' blist=$pkg_gui_linux brew_install
 			fi
 			;;
 		Darwin) 
 			bopt='' blist=$pkg_cli_darwin brew_install
 			if [ "$gui" = "true" ]; then 
-				bopt='--cask' blist=$pkg_gui_darwin brew_install
+				bgui='true' blist=$pkg_gui_darwin brew_install
 			fi
 			;;
 
@@ -91,12 +96,13 @@ module_brew() {
 module_pkg() {
 	case $os in 
 		FreeBSD)
-			sudo pkg install $pkg_cli $pkg_cli_freebsd 
+			sudo pkg install $pkg_cli $pkg_cli_freebsd
 			if [ "$gui" = "true" ]; then 
 				sudo pkg install $pkg_gui $pkg_gui_freebsd
 			fi
 			;;
 		OpenBSD)
+			sudo pkg_add $pkg_cli $pkg_cli_openbsd
 			if [ "$gui" = "true" ]; then 
 				sudo pkg_add $pkg_gui $pkg_gui_openbsd
 			fi
