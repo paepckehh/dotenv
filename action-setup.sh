@@ -63,10 +63,13 @@ module_setup_dotenv() {
 	# ln -fs .dotenv/vimrc .vimrc
 	ln -fs .dotenv/zshrc .zshrc
 	ln -fs .dotenv/gitconfig .gitconfig
-	ln -fs .dotenv/ssh/config .ssh/config
-	ln -fs .dotenv/ssh/known_hosts .ssh/known_hosts
-	ln -fs .dotenv/ssh/id_ed25519.pub .ssh/id_ed25519.pub 
-	ln -fs .dotenv/ssh/allowed_signers .ssh/allowed_signers
+	mkdir -p .ssh || exit 1 
+	cd .ssh || exit 1
+	ln -fs ../.dotenv/ssh/config .ssh/config
+	ln -fs ../.dotenv/ssh/known_hosts .ssh/known_hosts
+	ln -fs ../.dotenv/ssh/id_ed25519.pub .ssh/id_ed25519.pub 
+	ln -fs ../.dotenv/ssh/allowed_signers .ssh/allowed_signers
+	cd || exit 1
 	echo '[end][module:setup_dotenv]'
 }
 
