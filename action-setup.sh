@@ -11,7 +11,7 @@ pkg_cli_freebsd=''
 pkg_cli_openbsd=''
 pkg_gui='firefox libreoffice virtualbox'
 pkg_gui_linux=''
-pkg_gui_darwin='lulu istat-menus keka opencore-patcher docker'
+pkg_gui_darwin='lulu istat-menus keka opencore-patcher'
 pkg_gui_freebsd=''
 pkg_gui_openbsd=''
 
