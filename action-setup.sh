@@ -4,14 +4,14 @@
 # config
 gui='true'
 github_user='paepckehh'
-pkg_cli='openssh curl tmux zsh vim neovim git gh shellcheck shfmt go tldr ripgrep fzf rsync htop'
+pkg_cli='openssh curl tmux zsh vim neovim git gh jq yq shellcheck shfmt go tldr ripgrep fzf rsync htop'
 pkg_cli_linux=''
 pkg_cli_darwin=''
 pkg_cli_freebsd=''
 pkg_cli_openbsd=''
-pkg_gui='firefox libreoffice'
+pkg_gui='librewolf libreoffice'
 pkg_gui_linux=''
-pkg_gui_darwin='lulu istat-menus keka'
+pkg_gui_darwin='lulu keka'
 pkg_gui_freebsd=''
 pkg_gui_openbsd=''
 
