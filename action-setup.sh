@@ -11,7 +11,7 @@ pkg_cli_freebsd=''
 pkg_cli_openbsd=''
 pkg_gui='librewolf libreoffice'
 pkg_gui_linux=''
-pkg_gui_darwin='lulu keka'
+pkg_gui_darwin='lulu stats keka'
 pkg_gui_freebsd=''
 pkg_gui_openbsd=''
 
