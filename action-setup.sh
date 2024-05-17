@@ -4,7 +4,7 @@
 # config
 gui='true'
 github_user='paepckehh'
-pkg_cli='openssh curl tmux zsh vim neovim git gh jq yq shellcheck shfmt go tldr ripgrep fzf rsync htop'
+pkg_cli='openssh curl tmux zsh vim neovim git gh jq yq shellcheck shfmt go tldr ripgrep coreutils fzf rsync htop pv'
 pkg_cli_linux=''
 pkg_cli_darwin=''
 pkg_cli_freebsd=''
