@@ -42,7 +42,7 @@ module_setup_gh() {
 module_setup_ohmyzsh() {
 	echo '[start][module:setup_ohmyzsh]'
 	cd || exit 1
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	echo '[end][module:setup_ohmyzsh]'
 }
 
