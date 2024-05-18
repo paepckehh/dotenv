@@ -4,14 +4,14 @@
 # config
 gui='true'
 github_user='paepckehh'
-pkg_cli='openssh curl tmux zsh vim neovim git gh jq yq shellcheck shfmt go tldr ripgrep coreutils fzf rsync htop pv'
+pkg_cli='openssh curl tmux zsh vim neovim git gh jq yq shellcheck shfmt go tldr ripgrep coreutils moreutils fzf rsync htop pv'
 pkg_cli_linux=''
 pkg_cli_darwin=''
 pkg_cli_freebsd=''
 pkg_cli_openbsd=''
 pkg_gui='librewolf libreoffice'
 pkg_gui_linux=''
-pkg_gui_darwin='lulu stats keka'
+pkg_gui_darwin='lulu stats iterm2 keka'
 pkg_gui_freebsd=''
 pkg_gui_openbsd=''
 
@@ -118,9 +118,9 @@ module_pkg() {
 }
 
 module_setup() {
-	module_setup_dotenv
 	module_setup_ohmyzsh
-	module_setup_gh
+	# module_setup_gh
+	module_setup_dotenv
 }
 
 linux() {
