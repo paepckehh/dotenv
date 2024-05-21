@@ -46,6 +46,11 @@ module_setup_ohmyzsh() {
 	echo '[end][module:setup_ohmyzsh]'
 }
 
+module_setup_p10k() {
+	mkdir -p ~/.oh-my-zsh/custom/themes
+	git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+}
+
 module_setup_dotenv() {
 	echo '[start][module:setup_dotenv]'
 	cd || exit 1
@@ -119,6 +124,7 @@ module_pkg() {
 
 module_setup() {
 	module_setup_ohmyzsh
+	module_setup_p10k
 	# module_setup_gh
 	module_setup_dotenv
 }
