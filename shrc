@@ -3,9 +3,9 @@ eval $(ssh-agent)
 alias l="ls -la"
 alias e="vim"
 alias nix.update="cd /etc/nixos && sudo nix --verbose flake update && sudo nixos-rebuild --verbose --upgrade switch"
-alias nix.push="cd /etc/nixos && git add . && git commit -S -m update && git push"
+alias nix.push="cd /etc/nixos && git reset && git add . && git commit -S -m update && git push --force"
 alias dotenv.update="cd && ln -fs .dotenv/zshrc .zshrc && ln -fs .dotenv/bashrc .bashrc && ln -fs .dotenv/gitconfig .gitconfig"
-alias dotenv.push="cd && cd .dotenv && git add . && git commit -S -m update && git push"
+alias dotenv.push="cd && cd .dotenv && git reset && git add . && git commit -S -m update && git push --force"
 export SHELLCHECK_OPTS="-e SC2086"
 export LANG=en_US.UTF-8
 export EDITOR='vim'
