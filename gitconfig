@@ -1,16 +1,10 @@
-# This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
-	name = paepckehh
 	email = git@paepcke.de
-	signingkey = ~/.ssh/id_ed25519
+	name = Paepcke, Michael
+	signingkey = /home/me/.ssh/id_ed25519.pub
+[safe]
+	directory = /etc/nixos
+[commit]
+	gpgsign = true
 [gpg]
 	format = ssh
-[gpg "ssh"]
-	allowedSignersFile = /Users/mpp/.ssh/allowed_signers
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/local/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/local/bin/gh auth git-credential

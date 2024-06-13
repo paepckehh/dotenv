@@ -1,1 +1,0 @@
-macbookpro141.nix

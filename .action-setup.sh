@@ -36,6 +36,10 @@ module_setup_gh() {
 	echo 'press control-c to skip'
 	gh auth login
 	gh auth setup-git
+	git config --global commit.gpgsign true
+	git config --global user.signingkey /home/me/.ssh/id_ed25519.pub
+	git config --global user.email git@paepcke.de
+	git config --global user.name "Paepcke, Michael"
 	echo '[end][module:setup_gh]'
 }
 
